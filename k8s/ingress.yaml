@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: trading-dashboard
+  namespace: trading
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: trading.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: trading-dashboard
+                port:
+                  number: 8501

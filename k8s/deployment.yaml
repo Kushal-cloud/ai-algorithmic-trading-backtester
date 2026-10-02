@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: dashboard
-          image: ghcr.io/YOUR_GITHUB_USERNAME/ai-trading-backtester:latest
+          image: ghcr.io/kushal-cloud/ai-algorithmic-trading-backtester:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8501

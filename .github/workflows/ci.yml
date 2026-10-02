@@ -45,5 +45,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
-            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/kushal-cloud/ai-algorithmic-trading-backtester:${{ github.sha }}
+            ghcr.io/kushal-cloud/ai-algorithmic-trading-backtester:latest

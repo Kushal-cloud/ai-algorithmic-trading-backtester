@@ -27,4 +27,6 @@ outputs/*
 
 *.log
 
+*.deb
+
 .DS_Store

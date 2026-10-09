@@ -1,16 +1,18 @@
-# AI-Powered Algorithmic Trading Strategy Backtester
+# AI-Powered Multi-Asset Algorithmic Trading Backtester
 
-A modular Python application for historical-market-data ingestion, technical-feature engineering, ML-based signal generation, backtesting, risk metrics, and an interactive Streamlit dashboard.
+A modular Python application for historical-market-data ingestion across
+stocks, crypto, forex and CFDs, ICT/SMC feature engineering, ML-based signal
+generation, backtesting, risk metrics, and an interactive Streamlit dashboard.
 
 > This project is a research/backtesting system. It is not financial advice and does not execute live trades.
 
 ## Architecture
 
 ```text
-Market Data (yfinance)
+Market Data (yfinance: stocks / crypto / forex / CFDs)
         |
         v
-Data Loader --> Feature Engineering --> ML Signal Model
+Data Loader --> Feature Engineering (classic + ICT/SMC) --> ML Signal Model
                                       |
                                       v
                                Backtest Engine
@@ -83,7 +85,8 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-python scripts/train.py --ticker AAPL --period 5y
+python scripts/train.py --ticker AAPL --period 5y --asset-class us_stocks
+pytest -q
 streamlit run app/dashboard.py
 ```
 
@@ -135,10 +138,8 @@ The included `Jenkinsfile` implements:
 
 Configure these Jenkins credentials/environment values:
 
-- `DOCKER_REGISTRY`
-- `DOCKER_IMAGE`
-- Docker registry credentials with ID `docker-registry`
-- Kubernetes kubeconfig with ID `kubeconfig`
+- GHCR credentials with ID `ghcr-credentials` (username + token with `write:packages`)
+- A Kubernetes agent with `kubectl` configured for the target cluster
 
 The Kubernetes deployment is deliberately separated from application configuration so secrets and infrastructure settings are not committed.
 
@@ -175,6 +176,15 @@ Features include:
 - ATR
 - rolling volatility
 - volume change
+
+**ICT/SMC Features (New):**
+
+- **Order Blocks (OB):** Bullish and bearish order blocks identifying institutional entry points
+- **Breaker Blocks:** Order blocks that have been "broken" by subsequent price action
+- **Fair Value Gaps (FVG):** Imbalance zones where price inefficiently skipped a range
+- **Liquidity Sweeps:** Detection of stop-loss hunts at swing highs/lows
+- **Market Structure Classification:** Uptrend, downtrend, or range identification
+- **Black Box Strategy Signals:** Rule-based confluence signals combining OB/FVG with MSS filter
 
 Labels are generated from a configurable forward-return threshold. The backtest intentionally applies signals to the next bar to reduce look-ahead bias.
 

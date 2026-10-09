@@ -7,7 +7,7 @@ test:
 	pytest -q
 
 train:
-	python scripts/train.py --ticker AAPL --period 5y
+	PYTHONPATH=. python scripts/train.py --ticker AAPL --period 5y
 
 run:
 	streamlit run app/dashboard.py
